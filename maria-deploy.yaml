@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: maria-deploy
+  labels:
+    app: maria-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: maria-deploy
+  template:
+    metadata:
+      labels:
+        app: maria-deploy
+    spec:
+      containers:
+        - image: mariadb
+          name: app-data
+          env:
+            - name: MYSQL_ROOT_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: mysql-password
+                  key: password
+            - name: MYSQL_DATABASE
+              value: k8sdb
+            - name: MYSQL_ROOT_HOST
+              value: '%'
+            - name: MYSQL_PASSWORD
+              value: intra-pisicne-golang
+            - name: TZ
+              value: Asia/Seoul
+          ports:
+            - containerPort: 3306
+              name: maria-deploy
+          volumeMounts:
+            - name: maria-persistent-volume
+              mountPath: /var/lib/mysql
+      volumes:
+        - name: maria-persistent-volume
+          persistentVolumeClaim:
+            claimName: maria-claim
+

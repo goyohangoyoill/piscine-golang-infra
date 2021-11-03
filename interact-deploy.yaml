@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: interact-deploy
+  labels:
+    app: interact-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: interact-deploy
+  template:
+    metadata:
+      labels:
+        app: interact-deploy
+    spec:
+      containers:
+      - image: bigpel66/piscine-golang-interact:0.0.2
+        name: interact
+        ports:
+        - containerPort: 80
+          name: interact-port

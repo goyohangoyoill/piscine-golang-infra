@@ -1,0 +1,13 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: interact-load-balancer
+spec:
+  type: LoadBalancer
+  selector:
+    app: interact-deploy
+  ports:
+  - nodePort: 30689
+    port: 80
+    protocol: TCP
+    targetPort: 80
