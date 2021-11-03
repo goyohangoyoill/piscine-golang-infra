@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: grade
+  labels:
+    app: grade
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: grade
+  template:
+    metadata:
+      labels:
+        app: grade
+    spec:
+      containers:
+      - image: bigpel66/piscine-golang-grade:0.0.2
+        name: grade
+        imagePullPolicy: Always
+        command: ['sh', '-c', 'echo test && sleep 10000'] # 도커파일문제인듯 포그라운드로 무언가 실행시켜야할듯..
+        #resources:
+        #  limits:
+        #    memory: 512Mi
+        #    cpu: "1"
+        #  requests:
+        #    memory: 256Mi
+        #    cpu: "0.2"
+        ports:
+        - containerPort: 4242
+          name: grade-port
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grade-svc
+  labels:
+    app: grade-svc
+spec:
+  type: ClusterIP
+  ports:
+    - port: 4242
+  selector:
+    app: grade
