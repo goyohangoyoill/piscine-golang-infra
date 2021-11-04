@@ -15,17 +15,15 @@ spec:
         app: interact
     spec:
       containers:
-      - image: bigpel66/piscine-golang-interact:0.0.2
+      - image: zxcv9203/piscine-golang-interact:0.0.3
         name: interact
-        imagePullPolicy: Always
-        command: ['sh', '-c', 'echo test && sleep 10000'] # 도커파일 문제인듯 
-        #resources:
-        #  limits:
-        #    memory: 512Mi
-        #    cpu: "1"
-        #  requests:
-        #    memory: 256Mi
-        #    cpu: "0.2"
+        resources:
+          limits:
+            memory: 512Mi
+            cpu: "1"
+          requests:
+            memory: 256Mi
+            cpu: "0.2"
         ports:
         - containerPort: 80
           name: interact-port

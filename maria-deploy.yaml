@@ -28,7 +28,7 @@ spec:
             - name: MYSQL_ROOT_HOST
               value: '%'
             - name: MYSQL_PASSWORD
-              value: intra-pisicne-golang
+              value: '0000'
             - name: TZ
               value: Asia/Seoul
           ports:
