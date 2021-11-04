@@ -15,8 +15,9 @@ spec:
         app: grade-deploy
     spec:
       containers:
-      - image: bigpel66/piscine-golang-grade:0.0.2
+      - image: zxcv9203/piscine-golang-grade:0.0.3
         name: grade
         ports:
         - containerPort: 4242
           name: grade-port
+          

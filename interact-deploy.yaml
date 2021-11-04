@@ -15,7 +15,7 @@ spec:
         app: interact-deploy
     spec:
       containers:
-      - image: bigpel66/piscine-golang-interact:0.0.2
+      - image: zxcv9203/piscine-golang-interact:0.0.3
         name: interact
         ports:
         - containerPort: 80
