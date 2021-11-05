@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: interact-deploy
+  labels:
+    app: interact-deploy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: interact-deploy
+  template:
+    metadata:
+      labels:
+        app: interact-deploy
+    spec:
+      containers:
+      - image: zxcv9203/piscine-golang-interact:0.2.5
+        name: interact
+        ports:
+        - containerPort: 80
+          name: interact-port
+        resources:
+          limits:
+            memory: 512Mi
+            cpu: "1"
+          requests:
+            memory: 256Mi
+            cpu: "0.2"
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: interact-load-balancer
+spec:
+  type: LoadBalancer
+  selector:
+    app: interact-deploy
+  ports:
+  - nodePort: 30689
+    port: 80
+    protocol: TCP
+    targetPort: 80

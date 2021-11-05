@@ -15,7 +15,7 @@ spec:
         app: interact
     spec:
       containers:
-      - image: zxcv9203/piscine-golang-interact:0.0.3
+      - image: zxcv9203/piscine-golang-interact:0.2.5
         name: interact
         resources:
           limits:
@@ -36,12 +36,10 @@ metadata:
 spec:
   type: LoadBalancer
   selector:
-    app: interact-deploy
+    app: interact
   ports:
-  - port: 80
+  - nodePort: 30689
+    port: 80
     protocol: TCP
     targetPort: 80
-#status:
-#  LoadBalancer:
-#    ingress:
-#    - ip: 192.0.2.127
+

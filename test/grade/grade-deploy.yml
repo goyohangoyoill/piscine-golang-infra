@@ -15,7 +15,7 @@ spec:
         app: grade
     spec:
       containers:
-      - image: zxcv9203/piscine-golang-grade:0.0.3
+      - image: zxcv9203/piscine-golang-grade:0.1.0
         name: grade
         resources:
           limits:
@@ -32,9 +32,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: grade-svc
+  name: grade-service
   labels:
-    app: grade-svc
+    app: grade-service
 spec:
   type: ClusterIP
   ports:
