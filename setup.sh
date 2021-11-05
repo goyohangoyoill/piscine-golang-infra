@@ -9,6 +9,7 @@ if [[ -e ${PWFILE} ]] ; then
 	kubectl create secret generic mysql-password --from-file=${PWFILE}
 else
 	echo "패스워드 파일을 추가해주세요"
+	exit 1
 fi
 
 kubectl apply -f ${DB}
