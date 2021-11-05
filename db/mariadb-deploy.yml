@@ -22,7 +22,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: mysql-password
-                  key: password
+                  key: password.txt
             - name: MYSQL_DATABASE
               value: k8sdb
             - name: MYSQL_ROOT_HOST
@@ -41,4 +41,21 @@ spec:
         - name: maria-persistent-volume
           persistentVolumeClaim:
             claimName: maria-claim
+
+
+
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: maria-service
+  labels:
+    app: maria-service
+spec:
+  type: ClusterIP
+  ports:
+    - port: 3306
+  selector:
+    app: maria-deploy
 

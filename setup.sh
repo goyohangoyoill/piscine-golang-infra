@@ -13,6 +13,6 @@ fi
 
 kubectl apply -f ${DB}
 kubectl apply -f ${PV}
-sleep 1
+sleep 42
 kubectl apply -f ${GRADE}
 kubectl apply -f ${INTERACT}

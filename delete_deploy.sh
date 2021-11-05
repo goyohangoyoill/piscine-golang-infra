@@ -1,12 +1,11 @@
 #!/bin/bash
-PWFILE="./db/password.txt"
-DB="./db/maridb-deploy.yml"
 PV="./db/mariadb-pv.yml"
-GRADE="grade-deploy.yml"
-INTERACT="interact-deploy.yml"
+DB="./db/mariadb-deploy.yml"
+GRADE="grade/grade-deploy.yml"
+INTERACT="interact/interact-deploy.yml"
 
-kubectl delete -f ${PV}
 kubectl delete -f ${DB}
+kubectl delete -f ${PV}
 kubectl delete -f ${GRADE}
 kubectl delete -f ${INTERACT}
 kubectl delete secret mysql-password

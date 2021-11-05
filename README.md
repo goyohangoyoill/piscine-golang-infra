@@ -1,37 +1,22 @@
-# Application Organizing Order
+# Golang-Piscine 인프라
 
-1. Cluster of Kubernetes should be created base on ``docker``, not ``containerd``. To launch cluster on the local terminal, use ``cloud sdk`` with following command.
-> gcloud container clsuters get-credentials $(CLUSTER) --zone (ZONE) --proejct $(PROJECT)
+> GKE
 
-2. Login Docker on the cluster.
-> docker login
+1. GKE 클러스터에 다음과 같은 방식으로 연결합니다.
 
-3. Create credential for Docker Hub.
-> kubectl create secret docker-registry $(NAME) --docker-username=$(USERNAME) --docker-password=$(PASSWORD) --docker-email=$(EMAIL)
+``` shell
+gcloud container clusters get-credentials ${CLUSTER-ID} --zone ${ZONE} --project ${PROJECT-ID}
+```
 
-4. Create PV with ``persistent-volume.yaml``.
-> kubectl create -f persistent-volume.yaml
+2. DB 암호로 사용할 password.txt 파일을 생성 후 원하는 암호를 base64로 인코딩한 후 파일 에 저장합니다.
 
-5. Create Claim with ``maria-claim.yaml``.
-> kubectl create -f maria-claim.yaml
 
-6. Create credential for ``maria-deploy.yaml``.
-> kubectl create secret generic $(NAME) --from-literal=$(KEY)='$(VAL)'
+```
+echo 42seoul | base64 > password.txt
+```
 
-7. Create Deployment with ``maria-deploy.yaml``.
-> kubectl  create -f maria-deploy.yaml
+3 setup.sh를 실행합니다.
 
-8. Create Service with ``maria-service.yaml``.
-> kubectl create -f maria-service.yaml
-
-9. Create Deployment with ``grade-deploy.yaml``.
-> kubectl create -f grade-deploy.yaml
-
-10. Create Service with ``grade-service.yaml``.
-> kubectl craete -f grade-service.yaml
-
-11. Create Deployment with ``interact-deploy.yaml``.
-> kubectl create -f interact-deploy.yaml
-
-12. Create LB to match exposed Nodeport with ``interact-load-balancer.yaml``.
-> kubectl create -f interact-load-balancer.yaml
+```
+./setup.sh
+```
