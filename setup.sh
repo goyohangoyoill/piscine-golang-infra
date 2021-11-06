@@ -5,7 +5,8 @@ MARIA_PV="./db/mariadb-pv.yml"
 MONGO_DB="./db/mongodb-deploy.yml"
 MONGO_PV="./db/mongodb-pv.yml"
 GRADE="./grade/grade-deploy.yml"
-INTERACT="./interact/interact-deploy.yml"
+INTERACT_DEPLOY="./interact/interact-deploy.yml"
+INTERACT="./interact/interact.yml"
 
 echo "Golang-Piscine 채점 & 매칭 서버 배포 시스템"
 echo "1. 전체 배포"
@@ -51,7 +52,32 @@ if [[ $REPLY -eq 1 ]] ; then
 		echo "INPUT ERROR : INPUT VALUE ($REPLY)"
 	fi
 elif [[ $REPLY -eq 2 ]] ; then
-	echo "개발중.."
+	echo "재배포할 서버를 선택해주세요."
+	echo "1. Interact"
+	echo "2. Grade"
+	echo "3. MariaDB"
+	echo "4. MongoDB"
+	echo -n "재배포할 서버를 선택해주세요(번호를 입력해주세요) : "
+	read
+	
+	if [[ $REPLY -eq 1 ]] ; then
+		echo "Interact를 선택하셨습니다."
+		echo "1. Interact Deploy"
+		echo "2. Interact Deploy + Service"
+		echo -n "재배포 선택 : "
+		read
+		if [[ $REPLY -eq 1 ]] ; then
+			kubectl delete -f {$INTERACT_DEPLOY}
+			kubectl apply -f {$INTERACT_DEPLOY}
+		elif [[ $REPLY -eq 2 ]] ; then
+			kubectl delete -f {$INTERACT}
+			kubectl apply -f {INTERACT}
+		else
+			echo "INPUT ERROR : INPUT VALUE ($REPLY)"
+		fi
+	else
+		echo "개발중.."
+	fi
 elif [[ $REPLY -eq 3 ]] ; then
 	echo "배포 삭제할 데이터베이스 종류를 선택해주세요."
 	echo "1. Maria DB"
@@ -76,5 +102,5 @@ elif [[ $REPLY -eq 3 ]] ; then
 		echo "INPUT ERROR : INPUT VALUE ($REPLY)"
 	fi
 else
-	echo "INPUT ERROR"
+	echo "INPUT ERROR : INPUT VALUE ($REPLY)"
 fi
