@@ -15,7 +15,7 @@ spec:
         app: interact
     spec:
       containers:
-      - image: zxcv9203/piscine-golang-interact:0.3.12
+      - image: zxcv9203/piscine-golang-interact:0.3.1
         name: interact
         #resources:
         #  limits:
@@ -27,3 +27,19 @@ spec:
         ports:
         - containerPort: 80
           name: interact-port
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: interact-lb
+spec:
+  type: LoadBalancer
+  selector:
+    app: interact
+  ports:
+  - nodePort: 30688
+    port: 80
+    protocol: TCP
+    targetPort: 80
+

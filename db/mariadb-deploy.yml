@@ -27,8 +27,6 @@ spec:
               value: k8sdb
             - name: MYSQL_ROOT_HOST
               value: '%'
-            - name: MYSQL_PASSWORD
-              value: '0000'
             - name: TZ
               value: Asia/Seoul
           ports:

@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongo
+  labels:
+    app.kubernetes.io/name: mongo
+    app.kubernetes.io/component: database
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mongo
+      app.kubernetes.io/component: database
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: mongo
+        app.kubernetes.io/component: database
+    spec:
+      containers:
+      - name: mongodb
+        image: mongo
+        args:
+          - --bind_ip
+          - 0.0.0.0
+        env:
+          - name: MONGO_INITDB_ROOT_USERNAME
+            value: "root"
+          - name: MONGO_INITDB_ROOT_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: mongo-password
+                key: password.txt
+        ports:
+          - containerPort: 27017
+        volumeMounts:
+          - name: mongo-persistent-volume
+            mountPath: /var/lib/mongodb
+      volumes:
+        - name: mongo-persistent-volume
+          persistentVolumeClaim:
+            claimName: mongo-claim
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongo-service
+  labels:
+    app.kubernetes.io/name: mongo
+    app.kubernetes.io/component: database
+spec:
+  ports:
+  - port: 27017
+    targetPort: 27017
+  selector:
+    app.kubernetes.io/name: mongo
+    app.kubernetes.io/component: database
