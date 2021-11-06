@@ -35,7 +35,7 @@ spec:
           - containerPort: 27017
         volumeMounts:
           - name: mongo-persistent-volume
-            mountPath: /var/lib/mongodb
+            mountPath: /data/db
       volumes:
         - name: mongo-persistent-volume
           persistentVolumeClaim:
