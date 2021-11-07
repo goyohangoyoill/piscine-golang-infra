@@ -15,7 +15,7 @@ spec:
         app: interact
     spec:
       containers:
-      - image: zxcv9203/piscine-golang-interact:0.5.3
+      - image: zxcv9203/piscine-golang-interact:0.5.9
         name: interact
         #resources:
         #  limits:

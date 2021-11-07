@@ -31,6 +31,7 @@ spec:
               secretKeyRef:
                 name: mongo-password
                 key: password.txt
+          
         ports:
           - containerPort: 27017
         volumeMounts:
