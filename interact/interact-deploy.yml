@@ -15,7 +15,7 @@ spec:
         app: interact
     spec:
       containers:
-      - image: zxcv9203/piscine-golang-interact:0.4.1
+      - image: zxcv9203/piscine-golang-interact:0.5.3
         name: interact
         #resources:
         #  limits:
@@ -29,6 +29,3 @@ spec:
           name: interact-port
         - containerPort: 4242
           name: grade-interact
-        env:
-        - name: GRADE_SERVICE
-          value: 10.124.12.150
