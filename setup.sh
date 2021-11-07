@@ -24,7 +24,6 @@ if [[ $REPLY -eq 1 ]] ; then
 	fi
 		kubectl apply -f ${MONGO_DB}
 		kubectl apply -f ${MONGO_PV}
-		#sleep 42
 		kubectl apply -f ${GRADE}
 		kubectl apply -f ${INTERACT}
 elif [[ $REPLY -eq 2 ]] ; then
@@ -50,8 +49,38 @@ elif [[ $REPLY -eq 2 ]] ; then
 		else
 			echo "INPUT ERROR : INPUT VALUE ($REPLY)"
 		fi
+	elif [[ $REPLY -eq 2 ]] ; then
+		echo "Grade를 선택하셨습니다."
+		echo "1. Grade Deploy"
+		echo "2. Grade Deploy + Service"
+		echo -n "재배포 선택 : "
+		read
+		if [[ $REPLY -eq 1 ]] ; then
+			kubectl delete -f {$GRADE_DEPLOY}
+			kubectl apply -f {$GRADE_DEPLOY}
+		elif [[ $REPLY -eq 2 ]] ; then
+			kubectl delete -f {$GRADE}
+			kubectl apply -f {$GRADE}
+		else
+			echo "INPUT ERROR : INPUT VALUE ($REPLY)"
+		fi
+	elif [[ $REPLY -eq 2 ]] ; then
+		echo "MongoDB를 선택하셨습니다."
+		echo "1. MongoDB Deploy + Service"
+		echo "2. MongoDB PV + PVC"
+		echo -n "재배포 선택 : "
+		read
+			if [[ $REPLY -eq 1 ]] ; then
+				kubectl delete -f {$MONGO_PV}
+				kubectl apply -f {$MONGO_PV}
+			elif [[ $REPLY -eq 2 ]] ; then
+				kubectl delete -f {$MONGO_DB}
+				kubectl apply -f {$MONGO_DB}
+			else
+				echo "INPUT ERROR : INPUT VALUE ($REPLY)"
+			fi
 	else
-		echo "개발중.."
+		echo "INPUT ERROR : INPUT VALUE ($REPLY)"
 	fi
 elif [[ $REPLY -eq 3 ]] ; then
 	kubectl delete secret mongo-password 
