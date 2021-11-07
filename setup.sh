@@ -16,47 +16,22 @@ echo -n "배포 유형을 선택해주세요(번호를 입력해주세요) : "
 read
 
 if [[ $REPLY -eq 1 ]] ; then
-	echo "배포할 데이터베이스 종류를 선택해주세요."
-	echo "1. Maria DB"
-	echo "2. Mongo DB"
-	echo -n "배포할 데이터베이스를 선택해주세요(번호를 입력해주세요) : "
-	read
-
-	if [[ $REPLY -eq 1 ]] ; then
-		if [[ -e ${PWFILE} ]] ; then
-			kubectl create secret generic mysql-password --from-file=${PWFILE}
-		else
-			echo "패스워드 파일을 추가해주세요"
-			exit 1
-		fi
-
-		kubectl apply -f ${MARIA_DB}
-		kubectl apply -f ${MARIA_PV}
-		sleep 42
-		kubectl apply -f ${GRADE}
-		kubectl apply -f ${INTERACT}
-
-	elif [[ $REPLY -eq 2 ]] ; then
-			if [[ -e ${PWFILE} ]] ; then
-			kubectl create secret generic mongo-password --from-file=${PWFILE}
-		else
-			echo "패스워드 파일을 추가해주세요"
-			exit 1
-		fi
+	if [[ -e ${PWFILE} ]] ; then
+		kubectl create secret generic mongo-password --from-file=${PWFILE}
+	else
+		echo "패스워드 파일을 추가해주세요"
+		exit 1
+	fi
 		kubectl apply -f ${MONGO_DB}
 		kubectl apply -f ${MONGO_PV}
-		sleep 42
+		#sleep 42
 		kubectl apply -f ${GRADE}
 		kubectl apply -f ${INTERACT}
-	else
-		echo "INPUT ERROR : INPUT VALUE ($REPLY)"
-	fi
 elif [[ $REPLY -eq 2 ]] ; then
 	echo "재배포할 서버를 선택해주세요."
 	echo "1. Interact"
 	echo "2. Grade"
-	echo "3. MariaDB"
-	echo "4. MongoDB"
+	echo "3. MongoDB"
 	echo -n "재배포할 서버를 선택해주세요(번호를 입력해주세요) : "
 	read
 	
@@ -79,28 +54,11 @@ elif [[ $REPLY -eq 2 ]] ; then
 		echo "개발중.."
 	fi
 elif [[ $REPLY -eq 3 ]] ; then
-	echo "배포 삭제할 데이터베이스 종류를 선택해주세요."
-	echo "1. Maria DB"
-	echo "2. Mongo DB"
-	echo -n "배포 삭제할 데이터베이스를 선택해주세요(번호를 입력해주세요) : "
-	read
-
-	if [[ $REPLY -eq 1 ]] ; then
-		kubectl delete secret mysql-password
-		kubectl delete -f ${MARIA_DB}
-		kubectl delete -f ${MARIA_PV}
-		kubectl delete -f ${GRADE}
-		kubectl delete -f ${INTERACT}
-
-	elif [[ $REPLY -eq 2 ]] ; then
-		kubectl delete secret mongo-password 
-		kubectl delete -f ${MONGO_DB}
-		kubectl delete -f ${MONGO_PV}
-		kubectl delete -f ${GRADE}
-		kubectl delete -f ${INTERACT}
-	else
-		echo "INPUT ERROR : INPUT VALUE ($REPLY)"
-	fi
+	kubectl delete secret mongo-password 
+	kubectl delete -f ${MONGO_DB}
+	kubectl delete -f ${MONGO_PV}
+	kubectl delete -f ${GRADE}
+	kubectl delete -f ${INTERACT}
 else
 	echo "INPUT ERROR : INPUT VALUE ($REPLY)"
 fi
