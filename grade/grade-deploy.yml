@@ -15,29 +15,15 @@ spec:
         app: grade
     spec:
       containers:
-      - image: zxcv9203/piscine-golang-grade:0.1.0
+      - image: zxcv9203/piscine-golang-grade:0.2.4
         name: grade
-        resources:
-          limits:
-            memory: 512Mi
-            cpu: "1"
-          requests:
-            memory: 256Mi
-            cpu: "0.2"
+        #resources:
+        #  limits:
+        #    memory: 512Mi
+        #    cpu: "1"
+        #  requests:
+        #    memory: 256Mi
+        #    cpu: "0.2"
         ports:
         - containerPort: 4242
           name: grade-port
-
----
-apiVersion: v1
-kind: Service
-metadata:
-  name: grade-service
-  labels:
-    app: grade-service
-spec:
-  type: ClusterIP
-  ports:
-    - port: 4242
-  selector:
-    app: grade

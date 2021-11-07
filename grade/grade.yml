@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: interact
+  name: grade
   labels:
-    app: interact
+    app: grade
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: interact
+      app: grade
   template:
     metadata:
       labels:
-        app: interact
+        app: grade
     spec:
       containers:
-      - image: zxcv9203/piscine-golang-interact:0.4.1
-        name: interact
+      - image: zxcv9203/piscine-golang-grade:0.2.4
+        name: grade
         #resources:
         #  limits:
         #    memory: 512Mi
@@ -25,10 +25,20 @@ spec:
         #    memory: 256Mi
         #    cpu: "0.2"
         ports:
-        - containerPort: 80
-          name: interact-port
         - containerPort: 4242
-          name: grade-interact
-        env:
-        - name: GRADE_SERVICE
-          value: 10.124.12.150
+          name: grade-port
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: grade-service
+  labels:
+    app: grade-service
+spec:
+  type: ClusterIP
+  ports:
+    - port: 4242
+      targetPort: 4242
+  selector:
+    app: grade
