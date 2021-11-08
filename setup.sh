@@ -25,7 +25,7 @@ if [[ $REPLY -eq 1 ]] ; then
 	fi
 		kubectl apply -f ${MONGO_DB}
 		kubectl apply -f ${MONGO_PV}
-		sleep 42
+		#sleep 42
 		kubectl apply -f ${GRADE}
 		kubectl apply -f ${INTERACT}
 elif [[ $REPLY -eq 2 ]] ; then
