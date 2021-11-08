@@ -38,7 +38,7 @@ spec:
   selector:
     app: interact
   ports:
-  - nodePort: 30689
+  - nodePort: 30688
     port: 80
     protocol: TCP
     targetPort: 80

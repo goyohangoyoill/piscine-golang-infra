@@ -15,7 +15,7 @@ spec:
         app: grade
     spec:
       containers:
-      - image: zxcv9203/piscine-golang-grade:0.5.4
+      - image: zxcv9203/piscine-golang-grade:0.5.5
         name: grade
         #resources:
         #  limits:
