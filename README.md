@@ -12,7 +12,7 @@ gcloud container clusters get-credentials ${CLUSTER-ID} --zone ${ZONE} --project
 
 
 ```
-echo 42seoul | base64 > password.txt
+echo ${사용할 패스워드} | base64 > password.txt
 ```
 
 3 setup.sh를 실행합니다.
